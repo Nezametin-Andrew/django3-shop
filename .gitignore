@@ -1,0 +1,8 @@
+media/*
+static/*
+electro-master/*
+shop/db.sqlite3
+.idea/*
+shop/media/*
+shop/static_dev/*
+shop/static/*
