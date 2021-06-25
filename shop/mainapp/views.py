@@ -1,29 +1,21 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import NoteBook, SmartPhone, Category
-from django.views.generic import DetailView
+from django.views.generic import DetailView, View
+
+from .mixins import CategoryDetailMixin
 
 
-def index(request):
-    product = NoteBook.objects.all()
-    return render(request,
-                  'index.html',
-                  {
-                      "url": "http://localhost:8000/",
-                      "product": product
-                  })
+class BaseView(View):
+
+    def get(self, request, *args, **kwargs):
+        context = {
+            "category": Category.objects.get_category_for_site_bar()
+        }
+        return render(request, 'index.html', context)
 
 
-def test_view(request):
-    cat =Category.objects.get_category_for_site_bar()
-    return HttpResponse("hello")
-
-
-def product_page(request):
-    return render(request, 'product.html', {"url": "http://localhost:8000/"})
-
-
-class ProductDetailView(DetailView):
+class ProductDetailView(CategoryDetailMixin, DetailView):
 
     CT_MODEL_MODEL_CLASS = {
         'notebook': NoteBook,
@@ -39,3 +31,12 @@ class ProductDetailView(DetailView):
 
     template_name = "product_detail.html"
     pk_url_kwarg = "id"
+
+
+class CategoryDetailView(CategoryDetailMixin, DetailView):
+    model = Category
+    queryset = Category.objects.all()
+    context_object_name = 'category_name'
+    template_name = 'category_detail.html'
+    slug_url_kwarg = 'slug'
+

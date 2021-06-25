@@ -6,9 +6,9 @@ import debug_toolbar
 
 
 urlpatterns = [
-    path('', index, name="index"),
+    path('', BaseView.as_view(), name="index"),
     path('products/<str:ct_model>/<int:id>/', ProductDetailView.as_view(), name='product_detail'),
-    path('page2/', test_view, name="product"),
+    path('category/<str:slug>/', CategoryDetailView.as_view(), name='category_detail'),
 
 ]
 

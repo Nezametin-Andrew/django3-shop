@@ -17,6 +17,7 @@
 		<!-- Slick -->
 		<link type="text/css" rel="stylesheet" href="{% url 'index'%}static/css/slick.css"/>
 		<link type="text/css" rel="stylesheet" href="{% url 'index' %}static/css/slick-theme.css"/>
+		<link type="text/css" rel="stylesheet" href="{% url 'index' %}static/css/base.css"/>
 
 		<!-- nouislider -->
 		<link type="text/css" rel="stylesheet" href="{% url 'index' %}static/css/nouislider.min.css"/>
@@ -170,12 +171,13 @@
 				<!-- responsive-nav -->
 				<div id="responsive-nav">
 					<!-- NAV -->
+
 					<ul class="main-nav nav navbar-nav">
-						<li class="active"><a href="#">Главная</a></li>
+						<li class="active"><a href="/">Главная</a></li>
 						<li><a href="#">Горячие предложения</a></li>
-						<li><a href="#">Категории</a></li>
-						<li><a href="#">Ноутбуки</a></li>
-						<li><a href="#">Смартфоны</a></li>
+						{% for cat in category %}
+						<li><a href="{{cat.url}}">{{ cat.name }} <span class="qty-cat">{{cat.count}} </span></a></li>
+						{% endfor %}
 						<li><a href="#">Камеры</a></li>
 						<li><a href="#">Аксесуары</a></li>
 					</ul>
